@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLenis } from "@/hooks/use-lenis";
 import { Nav } from "@/components/site/Nav";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { Hero } from "@/components/site/Hero";
 import { WhyProperty } from "@/components/site/WhyProperty";
 import { StickyShowcase } from "@/components/site/StickyShowcase";
@@ -21,6 +22,7 @@ function Index() {
   return (
     <main className="relative bg-background text-foreground">
       <Nav />
+      <ScrollProgress />
       <Hero />
       <WhyProperty />
       <StickyShowcase

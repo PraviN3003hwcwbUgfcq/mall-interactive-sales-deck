@@ -1,5 +1,7 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
 import { SectionLabel } from "./SectionLabel";
+import { Reveal } from "./Reveal";
 import eventsImg from "@/assets/events.jpg";
 
 const formats = [
@@ -10,24 +12,25 @@ const formats = [
 ];
 
 export function Events() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const yRaw = useTransform(scrollYProgress, [0, 1], ["-10%", "15%"]);
+  const scaleRaw = useTransform(scrollYProgress, [0, 1], [1.1, 1.25]);
+  const y = useSpring(yRaw, { stiffness: 60, damping: 25, mass: 0.5 });
+  const scale = useSpring(scaleRaw, { stiffness: 60, damping: 25, mass: 0.5 });
+
   return (
-    <section id="events" className="relative overflow-hidden">
-      <div className="absolute inset-0">
+    <section id="events" ref={ref} className="relative overflow-hidden">
+      <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
         <img src={eventsImg} alt="Premium brand activation at The Dubai Mall" loading="lazy" width={1600} height={1080} className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/70 to-ink" />
-      </div>
+      </motion.div>
 
       <div className="relative mx-auto max-w-[1600px] px-6 py-32 lg:px-16 lg:py-48">
         <SectionLabel index="07" label="Events & Sponsorship" />
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="mt-8 max-w-5xl font-display text-[clamp(2.5rem,6vw,6rem)] leading-[0.98]"
-        >
+        <Reveal as="h2" y={80} duration={1.2} className="mt-8 max-w-5xl font-display text-[clamp(2.5rem,6vw,6rem)] leading-[0.98]">
           Your brand. Centre stage of the world's most-watched city.
-        </motion.h2>
+        </Reveal>
 
         <div className="mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {formats.map((f, i) => (
