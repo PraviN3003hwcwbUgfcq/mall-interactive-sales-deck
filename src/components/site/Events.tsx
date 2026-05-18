@@ -39,16 +39,19 @@ export function Events() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              className="group glass relative overflow-hidden rounded-sm p-8 transition-all hover:border-gold/40"
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -6 }}
+              className="group glass relative overflow-hidden rounded-sm p-8 transition-all duration-500 hover:border-gold/40 hover:shadow-[0_20px_50px_-20px_oklch(0.78_0.13_85_/_0.3)]"
             >
+              <span aria-hidden className="pointer-events-none absolute left-0 top-0 h-px w-0 bg-gold transition-all duration-700 group-hover:w-full" />
+              <span aria-hidden className="pointer-events-none absolute bottom-0 right-0 h-px w-0 bg-gold transition-all duration-700 delay-100 group-hover:w-full" />
               <div className="absolute -right-10 -top-10 font-display text-[9rem] leading-none text-white/[0.04] transition-colors group-hover:text-gold/10">
                 {String(i + 1).padStart(2, "0")}
               </div>
-              <h3 className="relative font-display text-2xl text-foreground">{f.title}</h3>
+              <h3 className="relative font-display text-2xl text-foreground transition-colors duration-500 group-hover:text-gold">{f.title}</h3>
               <p className="relative mt-4 text-sm font-light leading-relaxed text-muted-foreground">{f.copy}</p>
-              <div className="relative mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gold opacity-0 transition-opacity group-hover:opacity-100">
-                Enquire <span>→</span>
+              <div className="relative mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gold opacity-0 transition-all duration-500 group-hover:opacity-100">
+                Enquire <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
               </div>
             </motion.div>
           ))}
