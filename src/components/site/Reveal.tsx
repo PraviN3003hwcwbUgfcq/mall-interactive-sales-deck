@@ -28,7 +28,7 @@ export function Reveal({
 }: RevealProps) {
   const Tag = motion[as] as typeof motion.div;
   return (
-    <span className="block overflow-hidden">
+    <div className="overflow-hidden">
       <Tag
         initial={{ y, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -38,7 +38,7 @@ export function Reveal({
       >
         {children}
       </Tag>
-    </span>
+    </div>
   );
 }
 
