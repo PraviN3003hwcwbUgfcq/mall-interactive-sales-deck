@@ -1,6 +1,7 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { SectionLabel } from "./SectionLabel";
+import { Reveal } from "./Reveal";
 
 interface Item { title: string; copy: string; tag: string; }
 
@@ -18,14 +19,17 @@ interface Props {
 export function StickyShowcase({ id, index, label, heading, intro, image, items, align = "left" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.2]);
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const imgScaleRaw = useTransform(scrollYProgress, [0, 1], [1.05, 1.22]);
+  const imgYRaw = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
+  const imgScale = useSpring(imgScaleRaw, { stiffness: 70, damping: 25, mass: 0.5 });
+  const imgY = useSpring(imgYRaw, { stiffness: 70, damping: 25, mass: 0.5 });
+  const overlay = useTransform(scrollYProgress, [0, 0.5, 1], [0.15, 0.35, 0.6]);
 
   return (
     <section id={id} ref={ref} className="relative bg-background">
       <div className={`grid lg:grid-cols-2 ${align === "right" ? "lg:[direction:rtl]" : ""}`}>
         <div className="relative h-[60vh] lg:sticky lg:top-0 lg:h-screen lg:[direction:ltr]">
-          <motion.div style={{ scale: imgScale, y: imgY }} className="absolute inset-0">
+          <motion.div style={{ scale: imgScale, y: imgY }} className="absolute inset-0 will-change-transform">
             <img
               src={image}
               alt={heading}
@@ -35,6 +39,7 @@ export function StickyShowcase({ id, index, label, heading, intro, image, items,
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-ink/30" />
+            <motion.div style={{ opacity: overlay }} className="absolute inset-0 bg-ink" />
           </motion.div>
           <div className="pointer-events-none absolute bottom-8 left-8 right-8 flex items-end justify-between text-xs uppercase tracking-[0.3em] text-foreground/60 lg:[direction:ltr]">
             <span>{label}</span>
@@ -44,24 +49,12 @@ export function StickyShowcase({ id, index, label, heading, intro, image, items,
 
         <div className="px-6 py-20 lg:px-16 lg:py-32 lg:[direction:ltr]">
           <SectionLabel index={index} label={label} />
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="mt-8 font-display text-[clamp(2.25rem,4vw,4.5rem)] leading-[1.02]"
-          >
+          <Reveal as="h2" className="mt-8 font-display text-[clamp(2.25rem,4vw,4.5rem)] leading-[1.02]">
             {heading}
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.15 }}
-            className="mt-6 max-w-xl text-lg font-light leading-relaxed text-muted-foreground"
-          >
+          </Reveal>
+          <Reveal as="p" delay={0.15} y={30} className="mt-6 max-w-xl text-lg font-light leading-relaxed text-muted-foreground">
             {intro}
-          </motion.p>
+          </Reveal>
 
           <div className="mt-16 space-y-px border-t border-border">
             {items.map((item, i) => (
