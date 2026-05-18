@@ -50,9 +50,15 @@ export function Events() {
               </div>
               <h3 className="relative font-display text-2xl text-foreground transition-colors duration-500 group-hover:text-gold">{f.title}</h3>
               <p className="relative mt-4 text-sm font-light leading-relaxed text-muted-foreground">{f.copy}</p>
-              <div className="relative mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gold opacity-0 transition-all duration-500 group-hover:opacity-100">
-                Enquire <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
-              </div>
+              <a
+  href="#contact"
+  className="relative mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gold opacity-0 transition-all duration-500 group-hover:opacity-100"
+>
+  Enquire
+  <span className="transition-transform duration-500 group-hover:translate-x-1">
+    →
+  </span>
+</a>
             </motion.div>
           ))}
         </div>

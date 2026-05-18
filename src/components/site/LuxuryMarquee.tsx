@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { SectionLabel } from "./SectionLabel";
-import luxuryImg from "@/assets/luxury.jpg";
+ import luxuryImg from "../../assets/luxury.jpg";
 
 const brands = [
   "Louis Vuitton", "Chanel", "Cartier", "Hermès", "Dior", "Bvlgari",
@@ -12,7 +12,7 @@ export function LuxuryMarquee() {
   return (
     <section id="luxury" className="relative overflow-hidden bg-ink py-32 lg:py-48">
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-100"
         style={{
           backgroundImage: `url(${luxuryImg})`,
           backgroundSize: "cover",
@@ -20,7 +20,7 @@ export function LuxuryMarquee() {
           filter: "saturate(0.7) contrast(1.1)",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-ink" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/50" />
 
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
         <SectionLabel index="04" label="Luxury Brands" />
@@ -101,3 +101,5 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
     </div>
   );
 }
+
+

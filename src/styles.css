@@ -196,3 +196,50 @@
     opacity: 0.04; pointer-events: none; mix-blend-mode: overlay;
   }
 }
+
+
+
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+section {
+  width: 100%;
+}
+
+.section-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (min-width: 1024px) {
+  .section-container {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+}
+
+.safe-heading {
+  max-width: 900px;
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: normal;
+}
+
+.media-card {
+  min-height: 420px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(212, 175, 55, 0.18), transparent),
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+}
