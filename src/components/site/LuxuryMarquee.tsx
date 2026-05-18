@@ -58,11 +58,23 @@ export function LuxuryMarquee() {
           ["$1.2B+", "Annual luxury sales"],
           ["#1", "Luxury sales/sq ft globally"],
           ["80+", "Flagship boutiques"],
-        ].map(([k, v]) => (
-          <div key={v} className="glass-gold rounded-sm px-8 py-10 text-center">
-            <div className="font-display text-5xl text-gold">{k}</div>
-            <div className="mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{v}</div>
-          </div>
+        ].map(([k, v], i) => (
+          <motion.div
+            key={v}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -4 }}
+            className="glass-gold group relative overflow-hidden rounded-sm px-8 py-10 text-center transition-shadow duration-500 hover:shadow-[0_20px_60px_-20px_oklch(0.78_0.13_85_/_0.4)]"
+          >
+            <div
+              aria-hidden
+              className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold/15 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
+            />
+            <div className="relative font-display text-5xl text-gold">{k}</div>
+            <div className="relative mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{v}</div>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -78,7 +90,10 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
         transition={{ duration: 50, ease: "linear", repeat: Infinity }}
       >
         {[...items, ...items].map((b, i) => (
-          <span key={i} className="font-display text-5xl text-foreground/60 lg:text-7xl">
+          <span
+            key={i}
+            className="font-display text-5xl text-foreground/50 transition-colors duration-300 hover:text-gold lg:text-7xl"
+          >
             {b} <span className="text-gold">·</span>
           </span>
         ))}
